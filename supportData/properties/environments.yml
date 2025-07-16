@@ -1,0 +1,4 @@
+parabank:
+  environment.name: TRANSPORT-CONNECT-UAT
+  environment.type: UAT
+  parabank.url: https://parabank.parasoft.com/parabank/index.htm
