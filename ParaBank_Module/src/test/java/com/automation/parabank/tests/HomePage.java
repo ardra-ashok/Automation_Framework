@@ -8,6 +8,9 @@ import org.openqa.selenium.By;
 
 
 public class HomePage {
+    public static void navigateToRegister() {
+
+    }
 
 //    private By paraLogo = By.xpath("//img[@title='ParaBank']");
 //    private WebDriverHandler webDriverHandler;
