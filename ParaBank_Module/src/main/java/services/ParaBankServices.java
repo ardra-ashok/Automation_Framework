@@ -43,4 +43,7 @@ public class ParaBankServices {
         homePage.verifyLoginSuccess(firstName);
     }
 
+    public void verifyErrorMessage(String errorMsg) throws Exception {
+        homePage.verifyErrorMessage(errorMsg);
+    }
 }

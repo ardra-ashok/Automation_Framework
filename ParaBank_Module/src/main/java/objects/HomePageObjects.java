@@ -35,4 +35,8 @@ public class HomePageObjects {
     public static final String dashboardEndpoint = "/overview.htm";
     public static final By welcomeTextLogin = By.xpath("//p[@class='smallText']");
     public static final String expectLoginWelcomeText = "Welcome";
+
+
+    public static final By loginErrorMsg = By.xpath("//p[@class='error']");
+
 }

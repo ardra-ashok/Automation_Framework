@@ -27,7 +27,6 @@ public class BaseSteps extends Helpers {
         getScenarioDataMap().put(scenarioVariable,dataObject );
     }
 
-
     public BaseSteps(WebDriverHandler webDriverHandler){
         this.webDriverHandler = webDriverHandler;
     }

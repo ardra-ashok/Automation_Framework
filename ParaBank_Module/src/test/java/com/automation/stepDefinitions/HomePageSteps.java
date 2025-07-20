@@ -38,7 +38,7 @@ public class HomePageSteps extends Helpers {
     public void i_am_on_the_login_page() throws Exception {
         paraBankServices.navigateToLogin();
     }
-    @When("I enter valid username and password")
+    @When("I enter username and password")
     public void i_enter_valid_username_and_password(DataTable dataTable) throws Exception {
         Map<String, String> dataMap = new HashMap<>(dataTable.asMap(String.class, String.class));
         dataMap = replaceParamWithVariable(dataMap);
@@ -52,9 +52,14 @@ public class HomePageSteps extends Helpers {
     public void i_should_be_redirected_to_the_dashboard() throws Exception {
         paraBankServices.verifyRedirectToDashboard();
     }
-    @Then("I should see a welcome message with my {string}")
+    @Then("^I should see a welcome message with my \"([^\"]*)\"$")
     public void i_should_see_a_welcome_message_with_my(String firstName) throws Exception {
         paraBankServices.verifyLoginSuccess(replaceParamWithVariable(firstName));
+    }
+
+    @Then("^I should see an error message \"([^\"]*)\"$")
+    public void i_should_see_an_error_message(String errorMsg) throws Exception {
+        paraBankServices.verifyErrorMessage(errorMsg);
     }
 
 }
