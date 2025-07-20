@@ -65,13 +65,14 @@ public class HomePage extends BasePage {
     public void verifyRedirectToDashboard() throws Exception {
         webDriverHandler.waitForElementVisibility(HomePageObjects.loginSuccess,3);
         Assert.assertTrue(webDriverHandler.getURL().contains(HomePageObjects.dashboardEndpoint));
-
-
-//        Assert.assertTrue(webDriverHandler.getText(HomePageObjects.loginSuccess),HomePageObjects.loginSuccessExpectedTitle);
     }
 
-    public void verifyLoginSuccess() {
-
+    public void verifyLoginSuccess(String firstName) throws Exception {
+        webDriverHandler.waitForElementVisibility(HomePageObjects.loginSuccess,3);
+        Assert.assertEquals(webDriverHandler.getText(HomePageObjects.loginSuccess),HomePageObjects.loginSuccessExpectedTitle);
+        System.out.println(firstName);
+        System.out.println(webDriverHandler.getText(HomePageObjects.welcomeTextLogin));
+        Assert.assertTrue(webDriverHandler.getText(HomePageObjects.welcomeTextLogin).contains(HomePageObjects.expectLoginWelcomeText+" "+firstName));
     }
 
     @Override
@@ -82,7 +83,5 @@ public class HomePage extends BasePage {
     }
 
     @Override
-    public void navigate() {
-
-    }
+    public void navigate() {}
 }

@@ -52,9 +52,9 @@ public class HomePageSteps extends Helpers {
     public void i_should_be_redirected_to_the_dashboard() throws Exception {
         paraBankServices.verifyRedirectToDashboard();
     }
-    @Then("I should see a welcome message")
-    public void i_should_see_a_welcome_message() {
-        paraBankServices.verifyLoginSuccess();
+    @Then("I should see a welcome message with my {string}")
+    public void i_should_see_a_welcome_message_with_my(String firstName) throws Exception {
+        paraBankServices.verifyLoginSuccess(replaceParamWithVariable(firstName));
     }
 
 }

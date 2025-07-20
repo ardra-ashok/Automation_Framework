@@ -33,4 +33,6 @@ public class HomePageObjects {
     public static final By loginSuccess = By.cssSelector("#showOverview .title");
     public static final String loginSuccessExpectedTitle = "Accounts Overview";
     public static final String dashboardEndpoint = "/overview.htm";
+    public static final By welcomeTextLogin = By.xpath("//p[@class='smallText']");
+    public static final String expectLoginWelcomeText = "Welcome";
 }

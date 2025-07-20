@@ -39,7 +39,8 @@ public class ParaBankServices {
         homePage.verifyRedirectToDashboard();
     }
 
-    public void verifyLoginSuccess() {
-        homePage.verifyLoginSuccess();
+    public void verifyLoginSuccess(String firstName) throws Exception {
+        homePage.verifyLoginSuccess(firstName);
     }
+
 }
