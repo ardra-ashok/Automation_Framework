@@ -1,18 +1,14 @@
 package pages;
 
+import basePages.BasePage;
 import core.WebDriverHandler;
 import objects.HomePageObjects;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import java.util.Map;
-
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-
-public class HomePage {
+public class HomePage extends BasePage {
 
     private WebDriverHandler webDriverHandler;
     public HomePage(WebDriverHandler webDriverHandler){
@@ -46,10 +42,47 @@ public class HomePage {
     }
 
     public void verifyAccountCreation(String successMsg) throws Exception {
-
         webDriverHandler.waitForElementVisibility(HomePageObjects.welcomeText,5);
         Assert.assertTrue(webDriverHandler.getText(HomePageObjects.welcomeText).toLowerCase().contains("welcome"));
         String registerSuccess = webDriverHandler.getElement(with(HomePageObjects.inputTagParagraph).below(HomePageObjects.welcomeText)).getText();
         Assert.assertEquals(registerSuccess,successMsg);
+    }
+
+    public void navigateToLogin() throws Exception {
+        isPageLoaded();
+        Assert.assertEquals(webDriverHandler.getText(HomePageObjects.loginPageTitle),HomePageObjects.loginPageExpectedTitle);
+    }
+
+    public void enterLoginDetails(Map<String, String> dataMap) throws Exception {
+        webDriverHandler.enterData(HomePageObjects.usernameText,dataMap.get("username"));
+        webDriverHandler.enterData(HomePageObjects.passwordField,dataMap.get("password"));
+    }
+
+    public void clickLogin(){
+        webDriverHandler.click(HomePageObjects.loginBtn);
+    }
+
+    public void verifyRedirectToDashboard() throws Exception {
+        webDriverHandler.waitForElementVisibility(HomePageObjects.loginSuccess,3);
+        Assert.assertTrue(webDriverHandler.getURL().contains(HomePageObjects.dashboardEndpoint));
+
+
+//        Assert.assertTrue(webDriverHandler.getText(HomePageObjects.loginSuccess),HomePageObjects.loginSuccessExpectedTitle);
+    }
+
+    public void verifyLoginSuccess() {
+
+    }
+
+    @Override
+    public boolean isPageLoaded() {
+        if (!webDriverHandler.isElementAvailable(HomePageObjects.loginPageTitle))
+            System.out.println("Page not loaded");
+        return true;
+    }
+
+    @Override
+    public void navigate() {
+
     }
 }

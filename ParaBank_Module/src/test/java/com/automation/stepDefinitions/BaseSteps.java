@@ -6,8 +6,26 @@ import core.WebDriverHandler;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BaseSteps extends Helpers {
     private WebDriverHandler webDriverHandler;
+
+    private static Map<String, Object> scenarioDataMap = new HashMap<>();
+    public static Map<String, Object> getScenarioDataMap() {
+        if (scenarioDataMap == null) {
+            scenarioDataMap = new HashMap<>();
+        }
+        return scenarioDataMap;
+    }
+
+    public static void setScenarioVariable(String scenarioVariable, Object dataObject){
+        if (getScenarioDataMap().containsKey(scenarioVariable)){
+          return;
+        }
+        getScenarioDataMap().put(scenarioVariable,dataObject );
+    }
 
 
     public BaseSteps(WebDriverHandler webDriverHandler){
@@ -26,7 +44,7 @@ public class BaseSteps extends Helpers {
     }
 
     @When("I save the value of {string} in variable {string}")
-    public void iSaveTheValueOfInVariable(String arg0, String str) {
-//        PropertyManager.setScenarioVariable();
+    public void iSaveTheValueOfInVariable(String inputVariable, String variableName) {
+        PropertyManager.setScenarioVariable(variableName,replaceParamWithVariable(inputVariable));
     }
 }

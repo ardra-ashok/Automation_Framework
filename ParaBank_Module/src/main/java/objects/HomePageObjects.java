@@ -24,7 +24,13 @@ public class HomePageObjects {
     public static final By welcomeText = By.cssSelector("h1.title");
     public static final By inputTagParagraph = By.cssSelector("p");
 
-
-
-
+//    login Page
+    public static final By loginPageTitle = By.tagName("h2");
+    public static final String loginPageExpectedTitle = "Customer Login";
+    public static final By usernameText = By.cssSelector("input[name='username']");
+    public static final By passwordField = By.cssSelector("input[name='password']");
+    public static final By loginBtn = By.cssSelector("input[value='Log In']");
+    public static final By loginSuccess = By.cssSelector("#showOverview .title");
+    public static final String loginSuccessExpectedTitle = "Accounts Overview";
+    public static final String dashboardEndpoint = "/overview.htm";
 }

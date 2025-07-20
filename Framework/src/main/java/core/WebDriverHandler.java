@@ -1,6 +1,5 @@
 package core;
 
-import io.cucumber.java.an.E;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.*;
@@ -10,11 +9,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class WebDriverHandler {
 
 
+    public String getTitle() {
+        return getDriver().getTitle();
+    }
+
+    public String getURL() {
+        return getDriver().getCurrentUrl();
+    }
 
     public enum Browsers {IE, CHROME, FIREFOX, SAFARI, EDGE}
 
@@ -90,6 +95,7 @@ public class WebDriverHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            waitDriver = new WebDriverWait(webDriver, Duration.ofSeconds(2));
         }
         return webDriver;
     }
@@ -107,5 +113,30 @@ public class WebDriverHandler {
         }
     }
 
+    public boolean isElementAvailable(By by) {
+        try {
+            WebElement element = getDriver().findElement(by);
+            if (element != null)
+                return true;
+            return false;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    public boolean isElementVisible(By by) {
+        try {
+            WebElement element = getElement(by);
+            if ((element != null) && (element.isDisplayed()))
+                return true;
+            return false;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    public static void waitForDuration(int timeInSeconds) {
+        waitDriver.withTimeout(Duration.ofSeconds(timeInSeconds));
+    }
 
 }

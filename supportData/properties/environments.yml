@@ -2,3 +2,4 @@ parabank:
   environment.name: TRANSPORT-CONNECT-UAT
   environment.type: UAT
   uat.url: https://parabank.parasoft.com/parabank/index.htm
+  dashboard.endpoint: /overview.htm
