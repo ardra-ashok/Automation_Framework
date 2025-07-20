@@ -62,4 +62,23 @@ public class HomePageSteps extends Helpers {
         paraBankServices.verifyErrorMessage(errorMsg);
     }
 
+    @When("I click the login button without entering credentials")
+    public void i_click_the_login_button_without_entering_credentials() throws Exception {
+        paraBankServices.clickLogin();
+    }
+
+    @Then("^the password field should be of type \"([^\"]*)\"$")
+    public void the_password_field_should_be_of_type(String expectedType) throws Exception {
+        paraBankServices.checkType(expectedType);
+    }
+
+    @When("^I click on the \"([^\"]*)\" link$")
+    public void i_click_on_the_link(String clickOnForgotPassword) throws InterruptedException {
+        paraBankServices.clickonForgotPassword();
+    }
+
+    @Then("I should be redirected to the password recovery page")
+    public void i_should_be_redirected_to_the_password_recovery_page() {
+
+    }
 }

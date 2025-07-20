@@ -2,6 +2,7 @@ package pages;
 
 import basePages.BasePage;
 import core.WebDriverHandler;
+import io.cucumber.java.bs.A;
 import objects.HomePageObjects;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -87,5 +88,17 @@ public class HomePage extends BasePage {
     public void verifyErrorMessage(String errorMsg) throws Exception {
         webDriverHandler.waitForElementVisibility(HomePageObjects.loginErrorMsg,3);
         Assert.assertEquals(webDriverHandler.getText(HomePageObjects.loginErrorMsg),errorMsg);
+    }
+
+    public void checkAttributeType(String expectedType) throws Exception {
+        String actualType = webDriverHandler.getElement(HomePageObjects.passwordField).getAttribute("type");
+        Assert.assertEquals(actualType, expectedType);
+    }
+
+    public void clickOnForgotPassword() throws InterruptedException {
+//        webDriverHandler.wait(3000);
+        webDriverHandler.click(HomePageObjects.forgotPasswordLink);
+        Assert.assertTrue(webDriverHandler.getURL().contains(HomePageObjects.forgotPasswordEndpoint));
+        Assert.assertEquals(webDriverHandler.getText(HomePageObjects.forgotPasswordTitle),HomePageObjects.forgotPasswordExpectedTitle);
     }
 }

@@ -46,4 +46,12 @@ public class ParaBankServices {
     public void verifyErrorMessage(String errorMsg) throws Exception {
         homePage.verifyErrorMessage(errorMsg);
     }
+
+    public void checkType(String expectedType) throws Exception {
+        homePage.checkAttributeType(expectedType);
+    }
+
+    public void clickonForgotPassword() throws InterruptedException {
+        homePage.clickOnForgotPassword();
+    }
 }

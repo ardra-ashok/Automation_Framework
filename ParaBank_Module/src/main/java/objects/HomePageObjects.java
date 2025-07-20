@@ -36,7 +36,10 @@ public class HomePageObjects {
     public static final By welcomeTextLogin = By.xpath("//p[@class='smallText']");
     public static final String expectLoginWelcomeText = "Welcome";
 
-
     public static final By loginErrorMsg = By.xpath("//p[@class='error']");
+    public static final By forgotPasswordLink = By.xpath("//a[contains(text(), 'Forgot login info?')]");
+    public static final String forgotPasswordEndpoint = "/lookup.htm";
+    public static final By forgotPasswordTitle = By.cssSelector(".title");
+    public static final String forgotPasswordExpectedTitle = "Customer Lookup";
 
 }

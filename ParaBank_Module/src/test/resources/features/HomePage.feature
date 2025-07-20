@@ -34,9 +34,41 @@ Feature: Verify the Login/Register Page functionality
 
   Scenario: Login with invalid credentials
     Given I am on the login page
+    When I save the value of "testFName" in variable "$userName$"
     When I enter username and password
       | username | wronguser@example.com |
       | password | WrongPassword         |
     And I click the login button
     Then I should see an error message "The username and password could not be verified."
+
+  Scenario: Login with empty fields
+    Given I am on the login page
+    When I click the login button without entering credentials
+    Then I should see an error message "Please enter a username and password."
+
+
+  Scenario Outline: Login with empty username/password field
+    Given I am on the login page
+    When I save the value of "testFName" in variable "$userName$"
+    When I enter username and password
+      | username | <username> |
+      | password | <password> |
+    And I click the login button
+    Then I should see an error message "Please enter a username and password."
+    Examples:
+      | username   | password  |
+      | $userName$ |           |
+      |            | secret123 |
+
+  Scenario: Password field is masked
+    Given I am on the login page
+    Then the password field should be of type "password"
+
+  Scenario: Forgot password link navigation
+    Given I am on the login page
+    When I click on the "Forgot Password?" link
+    Then I should be redirected to the password recovery page
+
+
+#    verify all the links are working
 
