@@ -42,4 +42,7 @@ public class HomePageObjects {
     public static final By forgotPasswordTitle = By.cssSelector(".title");
     public static final String forgotPasswordExpectedTitle = "Customer Lookup";
 
+
+    public static final By allHyperLinks  = By.tagName("a");
+
 }

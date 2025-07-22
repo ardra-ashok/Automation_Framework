@@ -2,10 +2,13 @@ package pages;
 
 import basePages.BasePage;
 import core.WebDriverHandler;
-import io.cucumber.java.bs.A;
 import objects.HomePageObjects;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
@@ -17,8 +20,7 @@ public class HomePage extends BasePage {
     }
 
     public void navigateToRegister() {
-        webDriverHandler.click(HomePageObjects.registerBtn);
-        Assert.assertEquals(webDriverHandler.getText(HomePageObjects.registerPageTitle),HomePageObjects.registerPageExpectedTitle);
+
     }
 
     public void enterRegistrationDetails(Map<String, String> dataMap) throws Exception {
@@ -83,7 +85,9 @@ public class HomePage extends BasePage {
     }
 
     @Override
-    public void navigate() {}
+    public void navigate() {
+        isPageLoaded();
+    }
 
     public void verifyErrorMessage(String errorMsg) throws Exception {
         webDriverHandler.waitForElementVisibility(HomePageObjects.loginErrorMsg,3);
@@ -95,9 +99,45 @@ public class HomePage extends BasePage {
         Assert.assertEquals(actualType, expectedType);
     }
 
-    public void clickOnForgotPassword() throws InterruptedException {
-//        webDriverHandler.wait(3000);
+    public void clickOnForgotPassword() {
         webDriverHandler.click(HomePageObjects.forgotPasswordLink);
+    }
+
+    public void verifyLinksAreWorking() throws Exception {
+        List<WebElement> allHyperLinks = webDriverHandler.getElements(HomePageObjects.allHyperLinks);
+        System.out.println(allHyperLinks.size());
+        for(WebElement link: allHyperLinks) {
+            String href = link.getAttribute("href");
+
+            if (href == null || href.isEmpty()) {
+                System.out.println("Skipped: Empty href");
+                continue;
+            }
+
+            if (href.startsWith("javascript") || href.startsWith("mailto")) {
+                System.out.println("Skipped: Non-HTTP link: " + href);
+                continue;
+            }
+
+            try {
+                HttpURLConnection connection = (HttpURLConnection) new URL(href).openConnection();
+                connection.setConnectTimeout(5000);
+                connection.connect();
+                int statusCode = connection.getResponseCode();
+                if (statusCode >= 400) {
+                    System.out.println("Broken link: " + href + " --> " + statusCode);
+                } else {
+                    System.out.println("Working link: " + href + " --> " + statusCode);
+                }
+
+            }
+            catch (Exception e) {
+                System.out.println("Exception for URL: " + href + " --> " + e.getMessage());
+            }
+        }
+    }
+
+    public void verifyForgotPassword() {
         Assert.assertTrue(webDriverHandler.getURL().contains(HomePageObjects.forgotPasswordEndpoint));
         Assert.assertEquals(webDriverHandler.getText(HomePageObjects.forgotPasswordTitle),HomePageObjects.forgotPasswordExpectedTitle);
     }

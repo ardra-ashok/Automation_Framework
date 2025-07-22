@@ -9,17 +9,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class WebDriverHandler {
 
-
-    public String getTitle() {
-        return getDriver().getTitle();
-    }
-
-    public String getURL() {
-        return getDriver().getCurrentUrl();
-    }
+    private static Browsers browser = Browsers.CHROME;
 
     public enum Browsers {IE, CHROME, FIREFOX, SAFARI, EDGE}
 
@@ -31,7 +25,13 @@ public class WebDriverHandler {
     @Setter
     private static String baseUrl;
 
+    public String getTitle() {
+        return getDriver().getTitle();
+    }
 
+    public String getURL() {
+        return getDriver().getCurrentUrl();
+    }
     public String getText(By by) {
        return getDriver().findElement(by).getText();
     }
@@ -58,9 +58,13 @@ public class WebDriverHandler {
         }
     }
 
-
-
-    private static Browsers browser = Browsers.CHROME;
+    public List<WebElement> getElements(By by) throws Exception {
+        try {
+            return getDriver().findElements(by);
+        } catch (Exception ex) {
+            throw new Exception("Element selector: " + by.toString(), ex);
+        }
+    }
 
     public static WebDriver initializeDriver(){
             ChromeOptions options = new ChromeOptions();

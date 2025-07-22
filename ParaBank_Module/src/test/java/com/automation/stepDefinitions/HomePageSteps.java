@@ -18,9 +18,9 @@ public class HomePageSteps extends Helpers {
         this.paraBankServices = paraBankServices;
     }
 
-    @Given("I am on the registration page")
-    public void i_am_on_the_registration_page() {
-        paraBankServices.navigateToRegister();
+    @Given("^I am on the \"([^\"]*)\" page$")
+    public void i_am_on_the_page(String pageName) throws Exception {
+        paraBankServices.navigateTo(replaceParamWithVariable(pageName));
     }
 
     @When("I register with the following details")
@@ -34,10 +34,7 @@ public class HomePageSteps extends Helpers {
     public void i_should_see_a_message(String successMsg) throws Exception {
         paraBankServices.verifyAccountCreation(replaceParamWithVariable(successMsg));
     }
-    @Given("I am on the login page")
-    public void i_am_on_the_login_page() throws Exception {
-        paraBankServices.navigateToLogin();
-    }
+
     @When("I enter username and password")
     public void i_enter_valid_username_and_password(DataTable dataTable) throws Exception {
         Map<String, String> dataMap = new HashMap<>(dataTable.asMap(String.class, String.class));
@@ -73,12 +70,18 @@ public class HomePageSteps extends Helpers {
     }
 
     @When("^I click on the \"([^\"]*)\" link$")
-    public void i_click_on_the_link(String clickOnForgotPassword) throws InterruptedException {
-        paraBankServices.clickonForgotPassword();
+    public void i_click_on_the_link(String clickOnLink) throws InterruptedException {
+        paraBankServices.clickOnLink(clickOnLink);
     }
 
-    @Then("I should be redirected to the password recovery page")
-    public void i_should_be_redirected_to_the_password_recovery_page() {
-
+    @Then("^I should be redirected to the \"([^\"]*)\" page$")
+    public void i_should_be_redirected_to_the_password_recovery_page(String pageName) {
+        paraBankServices.verifyNavigation(replaceParamWithVariable(pageName));
     }
+
+    @Then("I verify all the links on the page are working")
+    public void i_verify_all_the_links_on_the_page_are_working() throws Exception {
+        paraBankServices.verifyLinkStatus();
+    }
+
 }

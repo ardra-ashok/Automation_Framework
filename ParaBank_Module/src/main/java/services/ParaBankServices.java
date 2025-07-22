@@ -11,9 +11,6 @@ public class ParaBankServices {
         this.homePage = homePage;
     }
 
-    public void navigateToRegister() {
-        homePage.navigateToRegister();
-    }
 
     public void enterRegistrationDetails(Map<String, String> dataMap) throws Exception {
         homePage.enterRegistrationDetails(dataMap);
@@ -23,9 +20,7 @@ public class ParaBankServices {
         homePage.verifyAccountCreation(successMsg);
     }
 
-    public void navigateToLogin() throws Exception {
-        homePage.navigateToLogin();
-    }
+
 
     public void enterLoginDetails(Map<String, String> dataMap) throws Exception {
         homePage.enterLoginDetails(dataMap);
@@ -51,7 +46,47 @@ public class ParaBankServices {
         homePage.checkAttributeType(expectedType);
     }
 
-    public void clickonForgotPassword() throws InterruptedException {
-        homePage.clickOnForgotPassword();
+    public void clickOnLink(String clickOnLink) throws InterruptedException {
+
+        switch(clickOnLink){
+            case "forgotPassword":
+                homePage.clickOnForgotPassword();
+                break;
+            default:
+                System.out.println("cannot find the correct option");
+                break;
+        }
+    }
+
+    public void verifyNavigation(String pageName) {
+        switch(pageName){
+            case "forgotPassword":
+                homePage.verifyForgotPassword();
+                break;
+            default:
+                System.out.println("cannot find the correct option");
+                break;
+        }
+    }
+
+    public void navigateTo(String pageName) throws Exception {
+        switch(pageName.toLowerCase()){
+            case "home":
+                homePage.navigate();
+                break;
+            case "login":
+                homePage.navigateToLogin();
+                break;
+            case "register":
+                homePage.navigateToRegister();
+                break;
+            default:
+                System.out.println("cannot find the correct option");
+                break;
+        }
+    }
+
+    public void verifyLinkStatus() throws Exception {
+        homePage.verifyLinksAreWorking();
     }
 }
