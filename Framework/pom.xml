@@ -57,7 +57,12 @@
             <artifactId>cucumber-picocontainer</artifactId>
             <version>7.14.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v137</artifactId>
+            <version>4.33.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
