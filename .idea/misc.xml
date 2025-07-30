@@ -9,7 +9,14 @@
         <option value="$PROJECT_DIR$/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/Framework/pom.xml" />
         <option value="$PROJECT_DIR$/CDP_Examples/pom.xml" />
+        <option value="$PROJECT_DIR$/HerokuApp/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/CDP_Examples/pom.xml" />
+        <option value="$PROJECT_DIR$/HerokuApp/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">

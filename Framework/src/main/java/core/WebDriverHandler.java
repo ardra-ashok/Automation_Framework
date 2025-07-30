@@ -139,6 +139,13 @@ public class WebDriverHandler {
         }
     }
 
+    public void waitThreadForDuration(int timeInSeconds) {
+        try {
+            Thread.sleep(timeInSeconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public static void waitForDuration(int timeInSeconds) {
         waitDriver.withTimeout(Duration.ofSeconds(timeInSeconds));
     }

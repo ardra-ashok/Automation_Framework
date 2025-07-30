@@ -3,3 +3,8 @@ parabank:
   environment.type: UAT
   uat.url: https://parabank.parasoft.com/parabank/index.htm
   dashboard.endpoint: /overview.htm
+
+herokuApp:
+  environment.name: HEROKU-APP
+  environment.type: UAT
+  uat.url: https://the-internet.herokuapp.com/
