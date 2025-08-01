@@ -10,7 +10,6 @@ Features
 * __Extent Reporting__: Integrates a comprehensive reporting mechanism to generate detailed, visually appealing test reports. Each test run produces a rich report with step-by-step details.
 * __Automated Screenshots__: Captures screenshots automatically on test failures and attaches them to the test reports, providing clear evidence of the failure point.
 * __Modular Design__: The framework is structured into logical modules (framework, ParaBank, supportData) to promote reusability and scalability.
-* __TestNG Framework__: Uses TestNG for test execution, providing features like annotations, test groups, and parallel execution. 
 * __Cross-Browser Testing__: Configurable to run tests across different browsers (e.g., Chrome, Firefox, Edge).
 
 Project Structure
