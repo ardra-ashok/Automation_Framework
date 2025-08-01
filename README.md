@@ -2,7 +2,7 @@ This is a robust and scalable UI automation framework built with Selenium and Ja
 The framework leverages a modular architecture and best practices like the Page Object Model (POM) to ensure test code is clean, reusable, and easy to manage.
 
 Features
-* Page Object Model (POM): Ensures a clear separation between test logic and web element locators, making tests more readable and easier to maintain.
+**Page Object Model (POM)** : Ensures a clear separation between test logic and web element locators, making tests more readable and easier to maintain.
 * Selenium WebDriver: Utilizes Selenium for browser automation, supporting various web browsers.
 * Data-Driven Testing: The framework supports data-driven testing by externalizing test data into a dedicated supportData module. This allows the same test script to be executed with different data sets, 
   enhancing test coverage and reusability.
