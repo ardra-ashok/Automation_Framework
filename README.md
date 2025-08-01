@@ -1,5 +1,13 @@
-This project is a modular Selenium Test Automation Framework built with Java, Maven, and TestNG, following best practices for scalability and maintainability. 
-It uses a multi-module structure, with a `common` module that houses reusable components such as WebDriver management (`DriverManager`), configuration handling (`ConfigLoader`), 
-and a base test setup (`BaseTest`). Each test module contains its own Page Object classes, test cases. 
-while the `runners` module is dedicated to executing test suites using TestNG. The `parent-pom.xml` manages all modules and shared dependencies, enabling clean separation of concerns, easy maintenance, and consistent setup across different test modules. Configuration files for each module is stored inside the supportData, which also includes the drivers, support files. etc
+This is a robust and scalable UI automation framework built with Selenium and Java. It is designed to provide an efficient and maintainable solution for testing web applications. 
+The framework leverages a modular architecture and best practices like the Page Object Model (POM) to ensure test code is clean, reusable, and easy to manage.
 
+Features
+* Page Object Model (POM): Ensures a clear separation between test logic and web element locators, making tests more readable and easier to maintain.
+* Selenium WebDriver: Utilizes Selenium for browser automation, supporting various web browsers.
+* Data-Driven Testing: The framework supports data-driven testing by externalizing test data into a dedicated supportData module. This allows the same test script to be executed with different data sets, 
+  enhancing test coverage and reusability.
+* Extent Reporting: Integrates a comprehensive reporting mechanism to generate detailed, visually appealing test reports. Each test run produces a rich report with step-by-step details.
+* Automated Screenshots: Captures screenshots automatically on test failures and attaches them to the test reports, providing clear evidence of the failure point.
+* Modular Design: The framework is structured into logical modules (framework, ParaBank, supportData) to promote reusability and scalability.
+* TestNG Framework: Uses TestNG for test execution, providing features like annotations, test groups, and parallel execution. 
+* Cross-Browser Testing: Configurable to run tests across different browsers (e.g., Chrome, Firefox, Edge).
