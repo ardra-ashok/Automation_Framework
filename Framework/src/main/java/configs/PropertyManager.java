@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import utils.YmlHandler;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,22 +25,15 @@ public class PropertyManager {
     @Setter
     protected static Map<String, String> environmentVariablesMap = new HashMap<String, String>();
 
-    protected static Properties props = new Properties();
-
     public static void loadTestPropertiesFromYML(String env) throws Exception {
-        String fileName = "../Framework/src/main/resources/runtimeResources/core.properties";
 
-        InputStream inputStream = new FileInputStream(fileName);
-
-        props.load(inputStream);
-        String RUNTIME_RESOURCES_DIR = props.getProperty("runtime.resources.dir", "../Framework/src/main/resources/runtimeResources");
 
         PropertyManager.setSystemProperty("env", env);
         try {
             Map<String, Map<String,String>> resultMap = new LinkedHashMap<>();
 
             try {
-                resultMap = YmlHandler.readYMLData(RUNTIME_RESOURCES_DIR + "/environments.yml");
+                resultMap = YmlHandler.readYMLData(CoreParams.RUNTIME_RESOURCES_DIR + "/environments.yml");
             }catch (Throwable t) {
                 throw new Exception("Error Reading Yml File");
             }
@@ -56,7 +47,7 @@ public class PropertyManager {
         }
     }
 
-    public static String getSystemProperty(String systemPropVar ) {
+    public static String getSystemProperty(String systemPropVar) {
         if (System.getProperty(systemPropVar) != null)
             return System.getProperty(systemPropVar);
         return null;

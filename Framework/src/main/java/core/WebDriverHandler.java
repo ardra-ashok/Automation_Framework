@@ -1,14 +1,21 @@
 package core;
 
+import configs.CoreParams;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 public class WebDriverHandler {
@@ -149,5 +156,30 @@ public class WebDriverHandler {
     public static void waitForDuration(int timeInSeconds) {
         waitDriver.withTimeout(Duration.ofSeconds(timeInSeconds));
     }
+
+
+    public static File takeScreenshotFile(String scenarioName, String runTimestamp) {
+        WebDriver currentDriver = getDriver();
+        if (currentDriver == null) return null;
+
+        File srcFile = ((TakesScreenshot) currentDriver).getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+        String safeScenarioName = scenarioName.replaceAll("[^a-zA-Z0-9]", "_");
+        String screenshotDir = "target/HTML Reports/" + safeScenarioName + "/" + runTimestamp + "/screenshots/";
+        String screenshotFileName = safeScenarioName + "_" + timestamp + ".png";
+        String fullScreenshotPath = screenshotDir + screenshotFileName;
+
+        try {
+            File destFile = new File(fullScreenshotPath);
+            destFile.getParentFile().mkdirs(); // Ensure directories exist
+            Files.copy(srcFile.toPath(), destFile.toPath());
+            return destFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 }

@@ -5,7 +5,9 @@ import configs.PropertyManager;
 import core.WebDriverHandler;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import utils.ReportHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,9 +32,8 @@ public class BaseSteps extends Helpers {
     public BaseSteps(WebDriverHandler webDriverHandler){
         this.webDriverHandler = webDriverHandler;
     }
-
     @When("^I launch \"([^\"]*)\" website$")
-    public void i_launch_website(String url) {
+    public void i_launch_website(String url) throws IOException {
         String baseUrl = PropertyManager.getEnvironmentVariable(url);
         webDriverHandler.navigateToUrl(baseUrl);
     }
