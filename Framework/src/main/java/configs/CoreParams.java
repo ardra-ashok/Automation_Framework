@@ -11,6 +11,7 @@ public class CoreParams {
     private static String coreRuntimeParamsfile="../framework/src/main/resources/runtimeResources/core.properties";
     public static String SCREENSHOTS_DIR;
     public static String RUNTIME_RESOURCES_DIR;
+    public static String DRIVERS_DIR;
 
 
     public static void loadCoreParams(String fileName) throws IOException {
@@ -24,6 +25,7 @@ public class CoreParams {
 
         RUNTIME_RESOURCES_DIR = props.getProperty("runtime.resources.dir", "../framework/src/main/resources/runtimeResources");
         SCREENSHOTS_DIR = props.getProperty("screenshot.dir", "target/HTML Reports/screenshots/");
+        DRIVERS_DIR = props.getProperty("drivers.dir", "../supportData/drivers");
 
     }
 }
