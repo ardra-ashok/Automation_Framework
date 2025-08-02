@@ -21,7 +21,6 @@ The framework is organized into the following key modules:
 - __listeners/__: Contains the Extent Reporting listener for generating reports.
 - __ParaBank__: Houses the Page Object Model and test scripts for the ParaBank website.
 - __pages/__: Contains Page Object classes for different web pages (e.g., LoginPage.java, AccountPage.java).
-- __tests/__: Contains the actual test scripts written using TestNG.
 - __supportData__: This is the dedicated module for managing all test data. This separation of data from the code is a key principle of data-driven testing.
 - __testData/__: A directory to store various test data files (e.g., .csv, .json, .properties) for different test scenarios.
 - __dataReaders/__: Contains utility classes for reading data from external files, making it easy for tests to access the data.
