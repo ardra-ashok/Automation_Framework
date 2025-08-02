@@ -51,21 +51,17 @@
             <artifactId>cucumber-testng</artifactId>
             <version>7.14.0</version>
         </dependency>
-        <!-- Core WebDriver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
             <version>4.11.0</version>
         </dependency>
-
-        <!-- ChromeDriver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
             <version>4.11.0</version>
         </dependency>
 
-        <!-- WebDriverWait and ExpectedConditions -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
@@ -83,7 +79,6 @@
             <artifactId>cucumber-picocontainer</artifactId>
             <version>7.14.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -108,13 +103,11 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.4.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.36</version>
+            <version>2.0.13</version>
         </dependency>
-
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
@@ -125,6 +118,27 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v113</artifactId>
+            <version>4.11.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>4.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-edge-driver</artifactId>
+            <version>4.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-safari-driver</artifactId>
+            <version>4.11.0</version>
         </dependency>
     </dependencies>
 

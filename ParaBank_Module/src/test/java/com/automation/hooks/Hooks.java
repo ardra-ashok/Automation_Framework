@@ -12,7 +12,6 @@ import io.cucumber.java.Scenario;
 import utils.ReportHandler;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,7 +23,7 @@ public class Hooks {
     private String scenarioName;
 
     @Before
-    public void setUp(Scenario scenario) throws IOException {
+    public void setUp(Scenario scenario) throws Exception {
         this.scenarioName = scenario.getName();
         this.runTimestamp = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss").format(new Date());
 

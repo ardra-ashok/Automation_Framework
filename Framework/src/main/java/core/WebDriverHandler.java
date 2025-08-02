@@ -3,10 +3,15 @@ package core;
 import configs.CoreParams;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,14 +20,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class WebDriverHandler {
 
-    private static Browsers browser = Browsers.CHROME;
-
     public enum Browsers {IE, CHROME, FIREFOX, SAFARI, EDGE}
+    private static Browsers browser = Browsers.SAFARI;
 
     private static WebDriver webDriver;
     private static WebDriverWait waitDriver;
@@ -73,14 +78,63 @@ public class WebDriverHandler {
         }
     }
 
-    public static WebDriver initializeDriver(){
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-            options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.DISMISS);
-            webDriver = new ChromeDriver(options);
-            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        return webDriver;
+
+    public static WebDriver initializeDriver() throws Exception {
+        try {
+            switch (browser) {
+                case CHROME:
+                    webDriver= new ChromeDriver(getChromeOptions());
+                    return webDriver;
+                case FIREFOX:
+                    webDriver = new FirefoxDriver(getFireFoxOptions());
+                    return webDriver;
+                case SAFARI:
+                    webDriver =  new SafariDriver(getSafariOptions());
+                    return webDriver;
+                case EDGE:
+                    webDriver = new EdgeDriver(getEdgeOptions());
+                    return webDriver;
+                default:
+                    return new ChromeDriver(getChromeOptions());
+            }
+        } catch (Exception ex) {
+            throw new Exception("Failed to initialize web driver", ex);
+        }
     }
+
+    private static EdgeOptions getEdgeOptions() {
+        System.setProperty("webdriver.edge.driver", CoreParams.DRIVERS_DIR + "/msedgedriver");
+        EdgeOptions options = new EdgeOptions();
+        options.addArguments("--window-size=970,1080");
+//        options.addArguments("--headless");
+        return options;
+    }
+
+    private static ChromeOptions getChromeOptions() {
+        System.setProperty("webdriver.chrome.driver", CoreParams.DRIVERS_DIR+"/chromedriver");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--incognito");
+        options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+        return options;
+    }
+
+    private static FirefoxOptions getFireFoxOptions() {
+        FirefoxOptions options = new FirefoxOptions();
+        options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
+//        options.addArguments("--headless");
+        return options;
+    }
+
+    private static SafariOptions getSafariOptions() {
+//        System.setProperty("webdriver.safari.driver", CoreParams.DRIVERS_DIR + "/safaridriver");
+        return new SafariOptions();
+    }
+
 
     public void waitForVisibilityOfElement(By by){
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
