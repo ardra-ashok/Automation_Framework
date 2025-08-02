@@ -5,7 +5,6 @@ import configs.PropertyManager;
 import core.WebDriverHandler;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import utils.ReportHandler;
 
 import java.io.IOException;
 import java.util.HashMap;

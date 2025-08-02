@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import configs.CoreParams;
+import configs.PropertyManager;
 import core.WebDriverHandler;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
@@ -32,6 +33,9 @@ public class Hooks {
         test.set(scenarioTest);
 
         CoreParams.loadCoreParams("");
+        String browserStr = PropertyManager.getSystemProperty("browser",null) != null ? PropertyManager.getSystemProperty("browser") : "chrome";
+        WebDriverHandler.setBrowser(WebDriverHandler.Browsers.valueOf(browserStr.toUpperCase()));
+        WebDriverHandler.closeDriver();
         WebDriverHandler.initializeDriver();
     }
 

@@ -3,7 +3,7 @@ parabank:
   environment.type: UAT
   uat.url: https://parabank.parasoft.com/parabank/index.htm
   dashboard.endpoint: /overview.htm
-  browser: chrome
+  browser: safari
 
 herokuApp:
   environment.name: HEROKU-APP

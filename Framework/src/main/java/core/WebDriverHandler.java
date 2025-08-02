@@ -23,19 +23,29 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverHandler {
 
     public enum Browsers {IE, CHROME, FIREFOX, SAFARI, EDGE}
-    private static Browsers browser = Browsers.SAFARI;
+    private static Browsers browser = Browsers.CHROME;
 
     private static WebDriver webDriver;
     private static WebDriverWait waitDriver;
 
 
+    @Setter
+    private static int implicitWaitInSecs = 10;
+    private static int explicitWaitInSecs = 10;
+
+
     @Getter
     @Setter
     private static String baseUrl;
+
+    public static void setBrowser(Browsers browser) {
+        WebDriverHandler.browser = browser;
+    }
 
     public String getTitle() {
         return getDriver().getTitle();
@@ -78,25 +88,24 @@ public class WebDriverHandler {
         }
     }
 
-
     public static WebDriver initializeDriver() throws Exception {
         try {
             switch (browser) {
-                case CHROME:
-                    webDriver= new ChromeDriver(getChromeOptions());
-                    return webDriver;
                 case FIREFOX:
                     webDriver = new FirefoxDriver(getFireFoxOptions());
-                    return webDriver;
+                    break;
                 case SAFARI:
                     webDriver =  new SafariDriver(getSafariOptions());
-                    return webDriver;
+                    break;
                 case EDGE:
                     webDriver = new EdgeDriver(getEdgeOptions());
-                    return webDriver;
+                    webDriver.manage().window().maximize();
+                    break;
                 default:
-                    return new ChromeDriver(getChromeOptions());
+                    webDriver = new ChromeDriver(getChromeOptions());
+                    break;
             }
+            return webDriver;
         } catch (Exception ex) {
             throw new Exception("Failed to initialize web driver", ex);
         }
@@ -117,6 +126,9 @@ public class WebDriverHandler {
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--incognito");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
         options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
         options.setExperimentalOption("useAutomationExtension", false);
         options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
@@ -131,7 +143,8 @@ public class WebDriverHandler {
     }
 
     private static SafariOptions getSafariOptions() {
-//        System.setProperty("webdriver.safari.driver", CoreParams.DRIVERS_DIR + "/safaridriver");
+        SafariOptions options = new SafariOptions();
+        options.setUseTechnologyPreview(true);
         return new SafariOptions();
     }
 
@@ -147,21 +160,29 @@ public class WebDriverHandler {
     }
 
     public static void closeDriver() {
-        if (webDriver != null)
-            webDriver.quit();
-        webDriver = null;
+        if (webDriver != null) {
+                webDriver.quit();
+            webDriver = null;
+        }
     }
-
 
     public static WebDriver getDriver() {
         if (webDriver == null) {
             try {
+                if (System.getProperties().contains("timeout") && System.getProperty("timeout").toString() != null) {
+                    implicitWaitInSecs = Integer.parseInt(System.getProperty("timeout"));
+                }
                 webDriver = initializeDriver();
+                webDriver.manage().timeouts().implicitlyWait(implicitWaitInSecs, TimeUnit.SECONDS);
+                webDriver.manage().timeouts().pageLoadTimeout(15, TimeUnit.MINUTES);
+                webDriver.manage().timeouts().setScriptTimeout(15,TimeUnit.MINUTES);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            waitDriver = new WebDriverWait(webDriver, Duration.ofSeconds(2));
+            waitDriver = new WebDriverWait(webDriver, Duration.ofSeconds(explicitWaitInSecs));
         }
+        webDriver.manage().window().maximize();
         return webDriver;
     }
 
