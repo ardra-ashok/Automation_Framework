@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-remote-driver</artifactId>
-            <version>4.12.0</version>
+            <version>4.14.0</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -48,18 +48,18 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
-            <version>4.11.0</version>
+            <version>4.14.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.11.0</version>
+            <version>4.14.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>4.11.0</version>
+            <version>4.14.0</version>
         </dependency>
 
         <dependency>
@@ -114,19 +114,19 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-devtools-v113</artifactId>
-            <version>4.11.0</version>
+            <artifactId>selenium-devtools-v124</artifactId>
+            <version>4.20.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
-            <version>4.11.0</version>
+            <version>4.14.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-edge-driver</artifactId>
-            <version>4.11.0</version>
+            <version>4.14.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
