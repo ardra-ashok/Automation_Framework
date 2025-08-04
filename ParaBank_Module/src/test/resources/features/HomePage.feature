@@ -1,4 +1,5 @@
 
+
 Feature: Verify the Login/Register Page functionality
 
   Background:
@@ -7,7 +8,7 @@ Feature: Verify the Login/Register Page functionality
 
   Scenario: Verify the Register page functionality
     When I save the value of "</Random(12)>" in variable "$userName$"
-    Given I am on the "registration" page
+    Given I am on the "register" page
     When I register with the following details
       | firstName   | testName    |
       | lastName    | lastName    |
@@ -29,7 +30,7 @@ Feature: Verify the Login/Register Page functionality
       | password | secret123 |
     And I click the login button
     Then I should be redirected to the dashboard
-    And I should see a welcome message with my "$userName$"
+    And I should see a welcome message with my "testName"
 
   Scenario: Login with invalid credentials
     Given I am on the "login" page
