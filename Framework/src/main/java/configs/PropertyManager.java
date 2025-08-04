@@ -123,7 +123,6 @@ public class PropertyManager {
         return appPropsVariablesMap.get(appPropVar);
     }
 
-
 }
 
 
