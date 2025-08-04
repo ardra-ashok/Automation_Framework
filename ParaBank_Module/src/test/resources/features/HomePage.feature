@@ -41,6 +41,7 @@ Feature: Verify the Login/Register Page functionality
     And I click the login button
     Then I should see an error message "The username and password could not be verified."
 
+  @test
   Scenario: Login with empty fields
     Given I am on the "login" page
     When I click the login button without entering credentials
