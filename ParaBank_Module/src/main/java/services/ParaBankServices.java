@@ -49,7 +49,7 @@ public class ParaBankServices {
     public void clickOnLink(String clickOnLink) throws InterruptedException {
 
         switch(clickOnLink){
-            case "forgotPassword":
+            case "Forgot Password?":
                 homePage.clickOnForgotPassword();
                 break;
             default:
