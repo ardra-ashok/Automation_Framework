@@ -15,15 +15,19 @@ import java.util.Properties;
 public class PropertyManager {
 
     private static Map<String, Object> scenarioDataMap = new HashMap<>();
+    private static Map<String, String> environmentVariablesMap = new HashMap<>();
+    private static Map<String, String> appPropsVariablesMap = new HashMap<>();
     protected static Map<String, Object> featureFileData = new HashMap<>();
+    
 
-    @Getter
-    @Setter
-    protected static Map<String, String> appPropsVariablesMap = new HashMap<String, String>();
+    public static Map<String, String> getEnvironmentVariablesMap() {
+        return environmentVariablesMap;
+    }
 
-    @Getter
-    @Setter
-    protected static Map<String, String> environmentVariablesMap = new HashMap<String, String>();
+    public static Map<String, String> getAppPropsVariablesMap() {
+        return appPropsVariablesMap;
+    }
+
 
     public static void loadTestPropertiesFromYML(String env) throws Exception {
 
