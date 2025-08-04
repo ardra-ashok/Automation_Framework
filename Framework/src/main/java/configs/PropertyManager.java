@@ -1,80 +1,63 @@
 package configs;
 
-
-import lombok.Getter;
-import lombok.Setter;
 import utils.YmlHandler;
-
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
-
-
 
 public class PropertyManager {
 
     private static Map<String, Object> scenarioDataMap = new HashMap<>();
-    private static Map<String, String> environmentVariablesMap = new HashMap<>();
-    private static Map<String, String> appPropsVariablesMap = new HashMap<>();
     protected static Map<String, Object> featureFileData = new HashMap<>();
-    
 
-    public static Map<String, String> getEnvironmentVariablesMap() {
-        return environmentVariablesMap;
-    }
+    private static final ThreadLocal<Map<String, String>> environmentVariablesMap =
+            ThreadLocal.withInitial(HashMap::new);
 
-    public static Map<String, String> getAppPropsVariablesMap() {
-        return appPropsVariablesMap;
-    }
-
+    private static final ThreadLocal<Map<String, String>> appPropsVariablesMap =
+            ThreadLocal.withInitial(HashMap::new);
 
     public static void loadTestPropertiesFromYML(String env) throws Exception {
-
-
         PropertyManager.setSystemProperty("env", env);
+
         try {
-            Map<String, Map<String,String>> resultMap = new LinkedHashMap<>();
+            Map<String, Map<String, String>> resultMap;
 
             try {
                 resultMap = YmlHandler.readYMLData(CoreParams.RUNTIME_RESOURCES_DIR + "/environments.yml");
-            }catch (Throwable t) {
-                throw new Exception("Error Reading Yml File");
+            } catch (Throwable t) {
+                throw new Exception("Error Reading YML File", t);
             }
-            environmentVariablesMap = resultMap.get(env);
-            if(environmentVariablesMap == null) {
+
+            Map<String, String> envData = resultMap.get(env);
+            if (envData == null) {
                 throw new Exception("Environment '" + env + "' not found in environments.yml. Available keys: " + resultMap.keySet());
             }
-        } catch (Throwable ex) {
 
-            throw new Exception("Could not load test environment properties for environment: " + env,ex);
+            // ✅ Store values in the thread-local map
+            environmentVariablesMap.get().clear();
+            environmentVariablesMap.get().putAll(envData);
+
+        } catch (Throwable ex) {
+            throw new Exception("Could not load test environment properties for environment: " + env, ex);
         }
     }
 
     public static String getSystemProperty(String systemPropVar) {
-        if (System.getProperty(systemPropVar) != null)
-            return System.getProperty(systemPropVar);
-        return null;
+        return System.getProperty(systemPropVar);
     }
 
     public static String getSystemProperty(String systemPropVar, String defaultValue) {
-        if (System.getProperty(systemPropVar) != null) {
-            return System.getProperty(systemPropVar);
-        } else
-            return defaultValue;
-
+        return System.getProperty(systemPropVar, defaultValue);
     }
 
-    public static void setSystemProperty(String systemPropVar, String stringValue)  {
-        System.setProperty(systemPropVar,stringValue);
+    public static void setSystemProperty(String systemPropVar, String stringValue) {
+        System.setProperty(systemPropVar, stringValue);
     }
 
-
-    public static void setScenarioVariable(String scenarioVariable, Object dataObject){
-        if (!getScenarioDataMap().containsKey(scenarioVariable))
-                getScenarioDataMap().put(scenarioVariable,dataObject );
+    public static void setScenarioVariable(String scenarioVariable, Object dataObject) {
+        if (!getScenarioDataMap().containsKey(scenarioVariable)) {
+            getScenarioDataMap().put(scenarioVariable, dataObject);
+        }
     }
-
 
     public static Map<String, Object> getScenarioDataMap() {
         if (scenarioDataMap == null) {
@@ -84,28 +67,26 @@ public class PropertyManager {
     }
 
     public static String getEnvironmentVariable(String environmentVar) {
-            return environmentVariablesMap.get(environmentVar);
-    }
-    public static String getEnvironmentVariable(String environmentVar, String defaultValue)  {
-        return environmentVariablesMap.getOrDefault(environmentVar, defaultValue);
+        return environmentVariablesMap.get().get(environmentVar);
     }
 
+    public static String getEnvironmentVariable(String environmentVar, String defaultValue) {
+        return environmentVariablesMap.get().getOrDefault(environmentVar, defaultValue);
+    }
 
     public static Object getScenarioVariable(String scenarioVariable) {
-        if (getScenarioDataMap().containsKey(scenarioVariable))
-            return getScenarioDataMap().get(scenarioVariable);
-        return null;
+        return getScenarioDataMap().get(scenarioVariable);
     }
 
-    public static Object getScenarioVariable(String scenarioVariable,String defaultValue )  {
+    public static Object getScenarioVariable(String scenarioVariable, String defaultValue) {
         return getScenarioDataMap().getOrDefault(scenarioVariable, defaultValue);
     }
 
-    public static <T> T getScenarioVariable(String scenarioVariable, Class<T> className ) {
-        if (getScenarioDataMap().containsKey(scenarioVariable))
-            return className.cast( getScenarioDataMap().get(scenarioVariable));
+    public static <T> T getScenarioVariable(String scenarioVariable, Class<T> className) {
+        if (getScenarioDataMap().containsKey(scenarioVariable)) {
+            return className.cast(getScenarioDataMap().get(scenarioVariable));
+        }
         return null;
-
     }
 
     public static Map<String, Object> getFeatureDataMap() {
@@ -119,15 +100,25 @@ public class PropertyManager {
         return featureFileData.get(featureFileDataVariable);
     }
 
-    public static Object getFeatureFileDataVariable(String featureFileDataVariable,String defaultValue )  {
+    public static Object getFeatureFileDataVariable(String featureFileDataVariable, String defaultValue) {
         return featureFileData.getOrDefault(featureFileDataVariable, defaultValue);
     }
 
     public static String getAppPropVariable(String appPropVar) {
-        return appPropsVariablesMap.get(appPropVar);
+        return appPropsVariablesMap.get().get(appPropVar);
+    }
+
+    public static void clearThreadLocals() {
+        environmentVariablesMap.remove();
+        appPropsVariablesMap.remove();
+    }
+
+    public static Map<String, String> getEnvironmentVariablesMap() {
+        return environmentVariablesMap.get();
+    }
+
+    public static Map<String, String> getAppPropsVariablesMap() {
+        return environmentVariablesMap.get();
     }
 
 }
-
-
-
