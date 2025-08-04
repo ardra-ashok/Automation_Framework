@@ -15,7 +15,7 @@ public class ReportHandler {
         String updatedScenarioName = scenarioName.replaceAll("[^a-zA-Z0-9]", "_");
 
         // Base folder path for scenario reports
-        String baseFolder = "target/HTMl Reports/" + updatedScenarioName;
+        String baseFolder = "target/HTML Reports/" + updatedScenarioName;
         String timestamp = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss").format(new Date());
         String runFolder = baseFolder + "/" + timestamp;
 
