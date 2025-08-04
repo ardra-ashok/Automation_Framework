@@ -75,7 +75,6 @@ public class HomePage extends BasePage {
     public void verifyLoginSuccess(String firstName) throws Exception {
         webDriverHandler.waitForElementVisibility(HomePageObjects.loginSuccess,3);
         Assert.assertEquals(webDriverHandler.getText(HomePageObjects.loginSuccess),HomePageObjects.loginSuccessExpectedTitle);
-        System.out.println(webDriverHandler.getText(HomePageObjects.welcomeTextLogin));
         Assert.assertTrue(webDriverHandler.getText(HomePageObjects.welcomeTextLogin).contains(firstName));
     }
 
