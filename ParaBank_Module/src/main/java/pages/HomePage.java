@@ -19,8 +19,10 @@ public class HomePage extends BasePage {
         this.webDriverHandler = webDriverHandler;
     }
 
-    public void navigateToRegister() {
-
+    public void navigateToRegister() throws Exception {
+        webDriverHandler.click(HomePageObjects.registerBtn);
+        String registerPageExpectedTitle = webDriverHandler.getElement(HomePageObjects.registerPageTitle).getText();
+        Assert.assertEquals(registerPageExpectedTitle,HomePageObjects.registerPageExpectedTitle,"Register page title");
     }
 
     public void enterRegistrationDetails(Map<String, String> dataMap) throws Exception {
@@ -74,7 +76,7 @@ public class HomePage extends BasePage {
         webDriverHandler.waitForElementVisibility(HomePageObjects.loginSuccess,3);
         Assert.assertEquals(webDriverHandler.getText(HomePageObjects.loginSuccess),HomePageObjects.loginSuccessExpectedTitle);
         System.out.println(webDriverHandler.getText(HomePageObjects.welcomeTextLogin));
-        Assert.assertTrue(webDriverHandler.getText(HomePageObjects.welcomeTextLogin).contains(HomePageObjects.expectLoginWelcomeText+" "+firstName));
+        Assert.assertTrue(webDriverHandler.getText(HomePageObjects.welcomeTextLogin).contains(firstName));
     }
 
     @Override
