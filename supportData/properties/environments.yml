@@ -1,12 +1,14 @@
 parabank:
-  environment.name: TRANSPORT-CONNECT-UAT
+  environment.name: PARABANK-UAT
   environment.type: UAT
   uat.url: https://parabank.parasoft.com/parabank/index.htm
   dashboard.endpoint: /overview.htm
   browser: safari
 
-herokuApp:
-  environment.name: HEROKU-APP
+tool-shop:
+  environment.name: TOOL-SHOP
   environment.type: UAT
-  uat.url: https://the-internet.herokuapp.com/
-  browser: chrome
+  uat.url: https://practicesoftwaretesting.com/
+  browser: edge
+
+
