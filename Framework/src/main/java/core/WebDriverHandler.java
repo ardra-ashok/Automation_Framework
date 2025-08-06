@@ -12,8 +12,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +66,24 @@ public class WebDriverHandler {
         getElement(by).sendKeys(data);
     }
 
+
+    public void sendData(By by,String data) throws Exception {
+        getDriver().findElement(by).sendKeys(data);
+    }
+
+    public WebElement fluentWait(By by, int timeOutInSeconds){
+        Wait<WebDriver> wait = new FluentWait<>(webDriver)
+                .withTimeout(Duration.ofSeconds(timeOutInSeconds))
+                .pollingEvery(Duration.ofMillis(2))
+                .ignoring(NoSuchElementException.class);
+
+        return wait.until(webDriver -> {
+            WebElement element = getDriver().findElement(by);
+            return (element.isDisplayed()) ? element : null;
+        });
+    }
+
+
     public void enterData(WebElement element,String data) throws Exception {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
         element.sendKeys(data);
@@ -85,6 +102,15 @@ public class WebDriverHandler {
             return getDriver().findElements(by);
         } catch (Exception ex) {
             throw new Exception("Element selector: " + by.toString(), ex);
+        }
+    }
+
+    public void select(By by, String text) throws Exception {
+        try {
+            Select select = new Select(getElement(by));
+            select.selectByVisibleText(text);
+        } catch (Throwable t) {
+            System.out.println("Web element not found");
         }
     }
 
