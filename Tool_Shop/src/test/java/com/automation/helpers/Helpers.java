@@ -6,13 +6,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Helpers {
 
+    private static final String[] LOREM_WORDS = ("Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua").split(" ");
     public String replaceParamWithVariable(String param){
-
 
         Pattern pattern = Pattern.compile("\\$(.+?)\\$");
         Matcher matcher = pattern.matcher(param);
@@ -49,6 +50,15 @@ public class Helpers {
             String key = match.replaceAll("</Random\\([0-9]+\\)>", getRandomeString(length));
             param = param.replace(match, key);
         }
+
+        pattern = Pattern.compile("</Comment\\([0-9]+\\)>");
+        matcher = pattern.matcher(param);
+        while (matcher.find()) {
+            String match =  matcher.group();
+            int length = Integer.parseInt(match.replaceAll("</Comment\\(", "").replaceAll("\\)>",""));
+            String key = match.replaceAll("</Comment\\([0-9]+\\)>", generateComment(length));
+            param = param.replace(match, key);
+        }
         return param;
     }
 
@@ -64,6 +74,16 @@ public class Helpers {
                 output.put(replaceParamWithVariable(key), replaceParamWithVariable(input.get(key)));
         }
         return output;
+    }
+
+
+    public static String generateComment(int wordCount) {
+        Random random = new Random();
+        StringBuilder paragraph = new StringBuilder();
+        for (int i = 0; i < wordCount; i++) {
+            paragraph.append(LOREM_WORDS[random.nextInt(LOREM_WORDS.length)]).append(" ");
+        }
+        return paragraph.toString().trim() + ".";
     }
 
 }
