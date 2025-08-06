@@ -22,7 +22,7 @@ Feature: Verify the Login/Register Page functionality
       | password    | secret123   |
     Then I should see a message "Your account was created successfully. You are now logged in."
 
-    @test
+    @test1
   Scenario: Successful login with valid credentials
     Given I am on the "login" page
     When I save the value of "testFName" in variable "$userName$"
