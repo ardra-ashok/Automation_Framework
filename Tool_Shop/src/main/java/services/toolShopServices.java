@@ -39,4 +39,16 @@ public class toolShopServices {
         }
 
     }
+
+    public void fillContactForm(Map<String, String> dataMap) throws Exception {
+        contactPage.fillContactForm(dataMap);
+    }
+
+    public void clickOnSubmit() throws Exception {
+        contactPage.clickOnSubmit();
+    }
+
+    public void verifyConfirmMessage(String successMsg) throws Exception {
+        contactPage.verifySuccessMessage(successMsg);
+    }
 }

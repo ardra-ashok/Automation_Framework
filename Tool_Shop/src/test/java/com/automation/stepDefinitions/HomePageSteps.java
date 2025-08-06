@@ -3,7 +3,6 @@ package com.automation.stepDefinitions;
 import com.automation.helpers.Helpers;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import services.toolShopServices;
 
 public class HomePageSteps extends Helpers {

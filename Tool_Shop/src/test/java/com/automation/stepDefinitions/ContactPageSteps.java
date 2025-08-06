@@ -2,19 +2,35 @@ package com.automation.stepDefinitions;
 
 import com.automation.helpers.Helpers;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import services.toolShopServices;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContactPageSteps extends Helpers {
+    private final toolShopServices toolShopServices;
 
-
-    @When("I entered the following details contact form")
-    public void i_entered_the_following_details_contact_form(DataTable dataTable) {
-
+    public ContactPageSteps(toolShopServices toolShopServices){
+        this.toolShopServices = toolShopServices;
     }
 
+    @When("I fill in the contact form with:")
+    public void i_fill_in_the_contact_form_with(DataTable dataTable) throws Exception {
+        Map<String, String> dataMap = new HashMap<>(dataTable.asMap(String.class, String.class));
+        dataMap = replaceParamWithVariable(dataMap);
+        toolShopServices.fillContactForm(dataMap);
+    }
 
-    @Then("I submit for a return for the product purchased")
-    public void iSubmitForAReturnForTheProductPurchased() {
+    @And("I click the Submit button")
+    public void iClickTheSubmitButton() throws Exception {
+        toolShopServices.clickOnSubmit();
+    }
+
+    @Then("^I should see a confirmation message \"([^\"]*)\"$")
+    public void iShouldSeeAConfirmationMessage(String successMsg) throws Exception {
+        toolShopServices.verifyConfirmMessage(successMsg);
     }
 }
