@@ -39,7 +39,7 @@ public class BaseSteps extends Helpers {
 
     @Given("^I set the test environment to \"([^\"]*)\"$")
     public void i_set_the_test_environment_to(String env) throws Exception {
-        PropertyManager.loadTestPropertiesFromYML(System.getProperty(env,"parabank"));
+        PropertyManager.loadTestPropertiesFromYML(replaceParamWithVariable(env));
     }
 
     @When("I save the value of {string} in variable {string}")
