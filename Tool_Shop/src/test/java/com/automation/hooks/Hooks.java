@@ -2,7 +2,6 @@ package com.automation.hooks;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import configs.CoreParams;
 import configs.PropertyManager;
 import core.WebDriverHandler;
@@ -16,23 +15,52 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class Hooks {
+
+    private ReportHandler report = ReportHandler.getInstance();
+    private static boolean shutdownHookRegistered = false;
 
     private ExtentReports extent;
     private ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     private String runTimestamp;
     private String scenarioName;
+    private String currentDate;
+    private String featureFileName;
+    private String reportPath;
+    private String screenshotsDir;
+
 
     @Before
     public void setUp(Scenario scenario) throws Exception {
+        CoreParams.loadCoreParams("");
+        if (!shutdownHookRegistered) {
+            registerShutdownHook();
+            shutdownHookRegistered = true;
+        }
+
         this.scenarioName = scenario.getName();
         this.runTimestamp = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss").format(new Date());
+        currentDate = new SimpleDateFormat("MMMM d, yyyy").format(new Date());
 
-        extent = ReportHandler.createExtentReport(scenarioName);
-        ExtentTest scenarioTest = extent.createTest(scenarioName);
-        test.set(scenarioTest);
+        this.reportPath = CoreParams.REPORTS_DIR + this.scenarioName + "/" + this.runTimestamp + "/QA_Test_Report.html";
+        this.screenshotsDir = CoreParams.SCREENSHOTS_DIR + this.scenarioName + "/" + this.runTimestamp + "/";
+        featureFileName = ReportHandler.getFeatureName(scenario);
 
-        CoreParams.loadCoreParams("");
+        report.startReport(
+                featureFileName,
+                currentDate,
+                System.getProperty("env")
+        );
+
+        report.startTestCase(
+                scenario.getId(),
+                scenario.getName(),
+                "Scenario from feature file: " + this.scenarioName
+        );
+
+
+
         String browserStr = PropertyManager.getSystemProperty("browser",null) != null ? PropertyManager.getSystemProperty("browser") : "chrome";
         WebDriverHandler.setBrowser(WebDriverHandler.Browsers.valueOf(browserStr.toUpperCase()));
         WebDriverHandler.closeDriver();
@@ -42,46 +70,47 @@ public class Hooks {
     @AfterStep
     public void afterEachStep(Scenario scenario) {
         try {
+
             String currentUrl = WebDriverHandler.getDriver().getCurrentUrl();
-            if (currentUrl != null && !currentUrl.equals("data:,")) {
-                File screenshotFile = WebDriverHandler.takeScreenshotFile(scenarioName, runTimestamp);
-                if (screenshotFile != null) {
-                    String relativePath = "screenshots/" + screenshotFile.getName();
-                    test.get().info("Step Screenshot",
-                            MediaEntityBuilder.createScreenCaptureFromPath(relativePath).build());
-                }
-            } else {
-                test.get().info("Initial Set up step");
+            if (currentUrl == null || currentUrl.startsWith("data:") || currentUrl.isEmpty()) {
+                return;
             }
+
+            File screenshotFile = WebDriverHandler.takeScreenshot(scenario.getName());
+            String relativePathForReport = (screenshotFile != null) ?  "../../../screenshots/" + screenshotFile.getName() : "";
+
+            String stepDescription = "Step executed successfully.";
+            report.addStep(
+                    "pass",
+                    stepDescription,
+                    relativePathForReport
+            );
         } catch (Exception e) {
-            test.get().warning("Screenshot failed: " + e.getMessage());
+            report.addStep("fail", "Failed to get screenshot or report step: " + e.getMessage(), "path/to/error_screenshot.png");
         }
     }
 
 
     @After
     public void tearDown(Scenario scenario) {
-        try {
-            File screenshotFile = WebDriverHandler.takeScreenshotFile(scenarioName, runTimestamp);
 
-            if (screenshotFile != null) {
-                String relativePath = "screenshots/" + screenshotFile.getName();
-                test.get().info("Final Scenario Screenshot",
-                        MediaEntityBuilder.createScreenCaptureFromPath(relativePath).build());
-            }
+        String status = scenario.isFailed() ? "fail" : "pass";
+        String failureDetails = scenario.isFailed() ? scenario.getStatus().toString() : null;
+        report.endTestCase(
+                status,
+                null,
+                failureDetails
+        );
 
-            if (scenario.isFailed()) {
-                test.get().fail("Scenario failed: " + scenarioName);
-            } else {
-                test.get().pass("Scenario passed: " + scenarioName);
-            }
-        } catch (Exception e) {
-            test.get().warning("Screenshot in @After failed: " + e.getMessage());
-        }
-
-        extent.flush();
         if(WebDriverHandler.getDriver()!=null)
             WebDriverHandler.closeDriver();
+    }
+
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            report.writeHtmlToFile(this.reportPath);
+            System.out.println("Final report generation triggered by shutdown hook.");
+        }));
     }
 
 }
