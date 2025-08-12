@@ -9,6 +9,6 @@ tool-shop:
   environment.name: TOOL-SHOP
   environment.type: UAT
   uat.url: https://practicesoftwaretesting.com/
-  browser: edge
+  browser: chrome
 
 

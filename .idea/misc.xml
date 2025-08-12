@@ -10,6 +10,8 @@
         <option value="$PROJECT_DIR$/Framework/pom.xml" />
         <option value="$PROJECT_DIR$/CDP_Examples/pom.xml" />
         <option value="$PROJECT_DIR$/HerokuApp/pom.xml" />
+        <option value="$PROJECT_DIR$/Mobile_Test/pom.xml" />
+        <option value="$PROJECT_DIR$/Tool_Shop/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

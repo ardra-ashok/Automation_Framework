@@ -29,7 +29,7 @@ public class SauceMobileTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
     }
 
-@Test
+    @Test
     public void testSuccessfulLogin() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
@@ -54,4 +54,5 @@ public class SauceMobileTest {
             driver.quit();
         }
     }
+
 }

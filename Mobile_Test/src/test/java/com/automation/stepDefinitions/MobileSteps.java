@@ -3,7 +3,6 @@ package com.automation.stepDefinitions;
 import com.automation.helpers.Helpers;
 import core.MobileHandler;
 import io.cucumber.java.en.Given;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +24,7 @@ public class MobileSteps extends Helpers {
         getScenarioDataMap().put(scenarioVariable,dataObject );
     }
 
-    public BaseSteps(MobileHandler mobileHandler){
+    public MobileSteps(MobileHandler mobileHandler){
         this.mobileHandler = mobileHandler;
     }
 

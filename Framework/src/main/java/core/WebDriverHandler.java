@@ -110,7 +110,7 @@ public class WebDriverHandler {
             Select select = new Select(getElement(by));
             select.selectByVisibleText(text);
         } catch (Throwable t) {
-            System.out.println("Web element not found");
+            throw new Exception(t);
         }
     }
 
@@ -260,19 +260,19 @@ public class WebDriverHandler {
 
 
     public static File takeScreenshotFile(String scenarioName, String runTimestamp) {
-        WebDriver currentDriver = getDriver();
-        if (currentDriver == null) return null;
+        webDriver = getDriver();
+        if (webDriver == null) return null;
 
-        File srcFile = ((TakesScreenshot) currentDriver).getScreenshotAs(OutputType.FILE);
+        File srcFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
         String safeScenarioName = scenarioName.replaceAll("[^a-zA-Z0-9]", "_");
-        String screenshotDir = "target/HTML Reports/" + safeScenarioName + "/" + runTimestamp + "/screenshots/";
+        String screenshotDir = CoreParams.SCREENSHOTS_DIR + safeScenarioName + "/" + runTimestamp+"/";
         String screenshotFileName = safeScenarioName + "_" + timestamp + ".png";
         String fullScreenshotPath = screenshotDir + screenshotFileName;
 
         try {
             File destFile = new File(fullScreenshotPath);
-            destFile.getParentFile().mkdirs(); // Ensure directories exist
+            destFile.getParentFile().mkdirs();
             Files.copy(srcFile.toPath(), destFile.toPath());
             return destFile;
         } catch (IOException e) {
@@ -281,6 +281,23 @@ public class WebDriverHandler {
         }
     }
 
+    public static File takeScreenshot(String fileName) {
+        WebDriver currentDriver = getDriver();
+        if (currentDriver == null) return null;
+
+        File srcFile = ((TakesScreenshot) currentDriver).getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+        String fullScreenshotPath = CoreParams.SCREENSHOTS_DIR +fileName+"_" + timestamp + ".png";
+        try {
+            File destFile = new File(fullScreenshotPath);
+            destFile.getParentFile().mkdirs();
+            Files.copy(srcFile.toPath(), destFile.toPath());
+            return destFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

@@ -6,12 +6,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import services.toolShopServices;
+import utils.ReportHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ContactPageSteps extends Helpers {
     private final toolShopServices toolShopServices;
+    private ReportHandler report = ReportHandler.getInstance();
 
     public ContactPageSteps(toolShopServices toolShopServices){
         this.toolShopServices = toolShopServices;
@@ -22,6 +24,7 @@ public class ContactPageSteps extends Helpers {
         Map<String, String> dataMap = new HashMap<>(dataTable.asMap(String.class, String.class));
         dataMap = replaceParamWithVariable(dataMap);
         toolShopServices.fillContactForm(dataMap);
+//        report.addStep("pass", "I save the value of \"" + value + "\" in variable \"" + variable + "\"", "path/to/screenshot.png");
     }
 
     @And("I click the Submit button")

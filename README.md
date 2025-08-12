@@ -19,7 +19,8 @@ The framework is organized into the following key modules:
 - __BaseTest.java__: The base class for all test scripts.
 - __utils/__: Contains utility classes for file I/O, properties, etc.
 - __listeners/__: Contains the Extent Reporting listener for generating reports.
-- __ParaBank__: Houses the Page Object Model and test scripts for the ParaBank website.
+- __ParaBank__: Houses the Page Object Model, runners and test scripts for the ParaBank website.
+- __Tool_shop__: Houses the Page Object Model, runner  and test scripts for the toolshop website.
 - __pages/__: Contains Page Object classes for different web pages (e.g., LoginPage.java, AccountPage.java).
 - __supportData__: This is the dedicated module for managing all test data. This separation of data from the code is a key principle of data-driven testing.
 - __testData/__: A directory to store various test data files (e.g., .csv, .json, .properties) for different test scenarios.

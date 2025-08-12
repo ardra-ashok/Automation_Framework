@@ -16,7 +16,7 @@ import io.cucumber.testng.CucumberOptions;
         },
         monochrome = true
 )
-public class  paraBankRunner extends AbstractTestNGCucumberTests {
+public class  sauceLabsRunner extends AbstractTestNGCucumberTests {
 
 }
 
