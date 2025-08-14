@@ -34,9 +34,11 @@ Feature: Verify contact form functionality
     Then I should see an error "<error_message>"
 
     Examples:
-      | firstName            | lastName            | Email          | subject  | message        | attachment | error_message          |
-      |                      | "Last_</Random(5)>" | test@gmail.com | Return   | </Comment(20)> | test.txt   | First name is required |
-      | "First_</Random(5)>" |                     | test@gmail.com | Return   | </Comment(20)> | test.txt   | Last name is required  |
-      | "First_</Random(5)>" | "Last_</Random(5)>" |                | Return   | </Comment(20)> | test.txt   | Email is required      |
-      | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com |          | </Comment(20)> | test.txt   | Subject is required    |
-      | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments |                | test.txt   | Message is required    |
+      | firstName            | lastName            | Email          | subject  | message        | attachment | error_message                         |
+      |                      | "Last_</Random(5)>" | test@gmail.com | Return   | </Comment(20)> | test.txt   | First name is required                |
+      | "First_</Random(5)>" |                     | test@gmail.com | Return   | </Comment(20)> | test.txt   | Last name is required                 |
+      | "First_</Random(5)>" | "Last_</Random(5)>" |                | Return   | </Comment(20)> | test.txt   | Email is required                     |
+      | "First_</Random(5)>" | "Last_</Random(5)>" | test@.com      | Return   | </Comment(20)> | test.txt   | Email format is invalid               |
+      | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com |          | </Comment(20)> | test.txt   | Subject is required                   |
+      | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments |                | test.txt   | Message is required                   |
+      | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments | </Comment(5)>  | test.txt   | Message must be minimal 50 characters |
