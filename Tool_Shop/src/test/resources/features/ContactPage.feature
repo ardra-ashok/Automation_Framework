@@ -9,7 +9,7 @@ Feature: Verify contact form functionality
     Then I navigated to "contact" page
     Given I am on the "contact" page
 
-  Scenario Outline: Submit contact form with valid data - Return
+  Scenario Outline: Submit contact form with valid data - <subject>
     When I fill in the contact form with:
       | firstName  | <firstName>  |
       | lastName   | <lastName>   |
