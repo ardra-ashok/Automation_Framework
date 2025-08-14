@@ -36,4 +36,10 @@ public class ContactPageSteps extends Helpers {
     public void iShouldSeeAConfirmationMessage(String successMsg) throws Exception {
         toolShopServices.verifyConfirmMessage(successMsg);
     }
+
+    @Then("^I should see an error \"([^\"]*)\"$")
+    public void i_should_see_an_error(String errorMessage) throws Exception {
+        toolShopServices.verifyErrorMessage(errorMessage);
+    }
+
 }

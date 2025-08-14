@@ -51,4 +51,8 @@ public class toolShopServices {
     public void verifyConfirmMessage(String successMsg) throws Exception {
         contactPage.verifySuccessMessage(successMsg);
     }
+
+    public void verifyErrorMessage(String errorMessageExpected) throws Exception {
+        contactPage.verifyAlertMessage(errorMessageExpected);
+    }
 }

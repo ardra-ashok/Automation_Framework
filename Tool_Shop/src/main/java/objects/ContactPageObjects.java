@@ -13,4 +13,5 @@ public class ContactPageObjects {
     public static final By chooseFileInput = By.cssSelector("#attachment");
     public static final By sendBtn = By.cssSelector("input[value='Send']");
     public static final By successMsgActual = By.cssSelector("div[role='alert']");
+    public static final By alertMessage = By.cssSelector(".alert-danger");
 }

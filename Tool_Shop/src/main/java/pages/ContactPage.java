@@ -38,7 +38,8 @@ public class ContactPage extends BasePage {
         webDriverHandler.enterData(ContactPageObjects.firstNameInputField,dataMap.get("firstName"));
         webDriverHandler.enterData(ContactPageObjects.lastNameInputField,dataMap.get("lastName"));
         webDriverHandler.enterData(ContactPageObjects.emailInputField,dataMap.get("email"));
-        webDriverHandler.select(ContactPageObjects.subjectSelect,dataMap.get("subject"));
+        if(!dataMap.get("subject").isEmpty())
+            webDriverHandler.select(ContactPageObjects.subjectSelect,dataMap.get("subject"));
         webDriverHandler.enterData(ContactPageObjects.messageInputField,dataMap.get("message"));
         if(dataMap.get("attachment").contains(".txt")) {
             File file = FileHandler.getOrCreateFile(dataMap.get("attachment"));
@@ -55,5 +56,11 @@ public class ContactPage extends BasePage {
         webDriverHandler.fluentWait(ContactPageObjects.successMsgActual,5);
         String successMsgActual = webDriverHandler.getText(ContactPageObjects.successMsgActual);
         Assert.assertEquals(successMsgActual,successMsg);
+    }
+
+    public void verifyAlertMessage(String errMsgExpected) throws Exception {
+        webDriverHandler.waitForElementVisibility(ContactPageObjects.alertMessage,2);
+        String errMsgActual = webDriverHandler.getElement(ContactPageObjects.alertMessage).getText();
+        Assert.assertEquals(errMsgExpected,errMsgActual,"Error Message is present");
     }
 }
