@@ -1,5 +1,6 @@
 package com.automation.stepDefinitions;
 
+import com.automation.context.ScenarioContext;
 import com.automation.helpers.Helpers;
 import configs.PropertyManager;
 import core.WebDriverHandler;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class BaseSteps extends Helpers {
     private WebDriverHandler webDriverHandler;
-    ReportHandler reportHandler;
+    private ScenarioContext scenarioContext;
 
     private static Map<String, Object> scenarioDataMap = new HashMap<>();
     public static Map<String, Object> getScenarioDataMap() {
@@ -29,19 +30,22 @@ public class BaseSteps extends Helpers {
         getScenarioDataMap().put(scenarioVariable,dataObject );
     }
 
-    public BaseSteps(WebDriverHandler webDriverHandler){
+    public BaseSteps(WebDriverHandler webDriverHandler,ScenarioContext scenarioContext){
         this.webDriverHandler = webDriverHandler;
+        this.scenarioContext = scenarioContext;
     }
     @When("^I launch \"([^\"]*)\" website$")
     public void i_launch_website(String url) {
-
-        String baseUrl = PropertyManager.getEnvironmentVariable(url);
+        String baseUrl = replaceParamWithVariable(PropertyManager.getEnvironmentVariable(url));
         webDriverHandler.navigateToUrl(baseUrl);
+//        scenarioContext.setStepDescription(String.format("I navigated to "));
     }
 
     @Given("^I set the test environment to \"([^\"]*)\"$")
     public void i_set_the_test_environment_to(String env) throws Exception {
-        PropertyManager.loadTestPropertiesFromYML(replaceParamWithVariable(env));
+        env = replaceParamWithVariable(env);
+        PropertyManager.loadTestPropertiesFromYML(env);
+        scenarioContext.setStepDescription(String.format("I set the environment to "+env));
     }
 
     @When("I save the value of {string} in variable {string}")

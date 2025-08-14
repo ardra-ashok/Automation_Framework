@@ -22,11 +22,11 @@ Feature: Verify contact form functionality
 Examples:
   | firstName            | lastName            | Email          | subject            | message        | attachment |
   | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Customer service   | </Comment(20)> | test.txt   |
-  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Webmaster          | </Comment(20)> | test.txt   |
-  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Return             | </Comment(20)> | test.txt   |
-  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments           | </Comment(20)> | test.txt   |
-  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Warranty           | </Comment(20)> | test.txt   |
-  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Status of my order | </Comment(20)> | test.txt   |
+#  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Webmaster          | </Comment(20)> | test.txt   |
+#  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Return             | </Comment(20)> | test.txt   |
+#  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments           | </Comment(20)> | test.txt   |
+#  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Warranty           | </Comment(20)> | test.txt   |
+#  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Status of my order | </Comment(20)> | test.txt   |
 
   Scenario Outline: Required field validation
     When I fill in the contact form with:

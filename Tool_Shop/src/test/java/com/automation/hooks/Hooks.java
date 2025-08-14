@@ -1,5 +1,6 @@
 package com.automation.hooks;
 
+import com.automation.context.ScenarioContext;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import configs.CoreParams;
@@ -19,16 +20,19 @@ import java.util.Date;
 public class Hooks {
 
     private ReportHandler report = ReportHandler.getInstance();
+    private final ScenarioContext scenarioContext;
     private static boolean shutdownHookRegistered = false;
 
-    private ExtentReports extent;
-    private ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     private String runTimestamp;
     private String scenarioName;
     private String currentDate;
     private String featureFileName;
     private String reportPath;
     private String screenshotsDir;
+
+    public Hooks(ScenarioContext scenarioContext) {
+        this.scenarioContext = scenarioContext;
+    }
 
 
     @Before
@@ -75,11 +79,12 @@ public class Hooks {
             if (currentUrl == null || currentUrl.startsWith("data:") || currentUrl.isEmpty()) {
                 return;
             }
+            String stepDescription = scenarioContext.getStepDescription();
 
             File screenshotFile = WebDriverHandler.takeScreenshot(scenario.getName());
             String relativePathForReport = (screenshotFile != null) ?  "../../../screenshots/" + screenshotFile.getName() : "";
 
-            String stepDescription = "Step executed successfully.";
+
             report.addStep(
                     "pass",
                     stepDescription,
