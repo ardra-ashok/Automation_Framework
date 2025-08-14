@@ -9,18 +9,24 @@ Feature: Verify contact form functionality
     Then I navigated to "contact" page
     Given I am on the "contact" page
 
-
-  Scenario: Submit contact form with valid data - Return
+  Scenario Outline: Submit contact form with valid data - Return
     When I fill in the contact form with:
-      | firstName  | "First_</Random(5)>" |
-      | lastName   | "Last_</Random(5)>"  |
-      | email      | test@gmail.com       |
-      | subject    | Return               |
-      | message    | </Comment(20)>       |
-      | attachment | test.txt             |
+      | firstName  | <firstName>  |
+      | lastName   | <lastName>   |
+      | email      | <Email>      |
+      | subject    | <subject>    |
+      | message    | <message>    |
+      | attachment | <attachment> |
     And I click the Submit button
     Then I should see a confirmation message "Thanks for your message! We will contact you shortly."
-
+Examples:
+  | firstName            | lastName            | Email          | subject            | message        | attachment |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Customer service   | </Comment(20)> | test.txt   |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Webmaster          | </Comment(20)> | test.txt   |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Return             | </Comment(20)> | test.txt   |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Payments           | </Comment(20)> | test.txt   |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Warranty           | </Comment(20)> | test.txt   |
+  | "First_</Random(5)>" | "Last_</Random(5)>" | test@gmail.com | Status of my order | </Comment(20)> | test.txt   |
 
   Scenario Outline: Required field validation
     When I fill in the contact form with:
